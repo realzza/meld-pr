@@ -17,8 +17,8 @@ stop_stage=100
 
 datadir=./downloads
 meld_root=${datadir}/MELD.Raw
-data_url=https://web.eecs.umich.edu/~mihalcea/downloads/MELD.Raw.tar.gz
-data_url2=https://huggingface.co/datasets/declare-lab/MELD/resolve/main/MELD.Raw.tar.gz
+data_url=https://web.eecs.umich.edu/~mihalcea/downloads/
+data_url2=https://huggingface.co/datasets/declare-lab/MELD/resolve/main/
 
 
 log "$0 $*"
@@ -39,16 +39,11 @@ if [ -z "${MELD}" ]; then
 fi
 
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
+    log "stage 1: Data Download"
     mkdir -p ${datadir}
-    if [ ! -e "${datadir}/MELD.Raw" ]; then
-        log "stage 1: Data Download"
-        if ! local/download_and_untar.sh ${datadir} ${data_url}; then
-            log "Failed primary download source, attempting backup source"
-            local/download_and_untar.sh ${datadir} ${data_url2}
-        fi
-        echo "stage 1: Download data to ${datadir}"
-    else
-        log "stage 1: ${datadir}/MELD.Raw is already existing. Skip data downloading"
+    if ! local/download_and_untar.sh ${datadir} ${data_url}; then
+        log "Failed to download from the original site, try a backup site."
+        local/download_and_untar.sh ${datadir} ${data_url2}
     fi
 fi
 
