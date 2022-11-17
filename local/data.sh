@@ -16,7 +16,10 @@ stage=1
 stop_stage=100
 
 datadir=./downloads
-meld_root=
+meld_root=${datadir}/MELD.Raw
+data_url=https://web.eecs.umich.edu/~mihalcea/downloads/MELD.Raw.tar.gz
+data_url2=https://huggingface.co/datasets/declare-lab/MELD/resolve/main/MELD.Raw.tar.gz
+
 
 log "$0 $*"
 . utils/parse_options.sh
@@ -36,10 +39,16 @@ if [ -z "${MELD}" ]; then
 fi
 
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
-    if [ ! -e "${MELD}/Fluent Speech Commands Public License.pdf" ]; then
-	echo "stage 1: Download data to ${MELD}"
+    mkdir -p ${datadir}
+    if [ ! -e "${datadir}/MELD.Raw" ]; then
+        log "stage 1: Data Download"
+        if ! local/download_and_untar.sh ${datadir} ${data_url}; then
+            log "Failed primary download source, attempting backup source"
+            local/download_and_untar.sh ${datadir} ${data_url2}
+        fi
+        echo "stage 1: Download data to ${datadir}"
     else
-        log "stage 1: ${MELD}/Fluent Speech Commands Public License.pdf is already existing. Skip data downloading"
+        log "stage 1: ${datadir}/MELD.Raw is already existing. Skip data downloading"
     fi
 fi
 
