@@ -31,7 +31,7 @@ if [ -z "$url" ]; then
   exit 1;
 fi
 
-if [ -d $data/MELD.Raw ]; then
+if [ -d $data/data ]; then
   echo "$0: meld directory already exists in $data"
   exit 0;
 fi
@@ -89,8 +89,9 @@ mv train_splits MELD.Raw/train
 echo "$0: Successfully downloaded and un-tarred $data/MELD.Raw/train.tar.gz"
 
 mkdir data
-mv MELD.Raw/*.csv data/
-mv *.csv data/
+mv MELD.Raw/test_sent_emo.csv data/
+mv MELD.Raw/dev_sent_emo.csv data/valid_sent_emo.csv
+mv train_sent_emo.csv data/
 mv MELD.Raw/README.txt ./
 
 if $remove_archive; then
