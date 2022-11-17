@@ -15,7 +15,7 @@ SECONDS=0
 stage=1
 stop_stage=1
 
-datadir=./downloads_test
+datadir=./downloads
 meld_root=${datadir}/MELD.Raw
 data_url=https://web.eecs.umich.edu/~mihalcea/downloads/
 data_url2=https://huggingface.co/datasets/declare-lab/MELD/resolve/main/
