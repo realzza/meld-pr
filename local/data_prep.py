@@ -4,8 +4,8 @@
 #           2022  Carnegie Mellon University
 # Apache 2.0
 
-import re
 import os
+import re
 import sys
 
 import pandas as pd
