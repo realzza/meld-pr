@@ -64,7 +64,39 @@ fi
 
 echo "$0: Successfully downloaded and un-tarred $data/MELD.Raw.tar.gz"
 
+if ! tar -xvzf MELD.Raw/dev.tar.gz; then
+  echo "$0: error un-tarring archive $data/MELD.Raw/dev.tar.gz"
+  exit 1;
+fi
+
+mv dev_splits_complete MELD.Raw/valid
+echo "$0: Successfully downloaded and un-tarred $data/MELD.Raw/dev.tar.gz"
+
+if ! tar -xvzf MELD.Raw/test.tar.gz; then
+  echo "$0: error un-tarring archive $data/MELD.Raw/test.tar.gz"
+  exit 1;
+fi
+
+mv output_repeated_splits_test MELD.Raw/test
+echo "$0: Successfully downloaded and un-tarred $data/MELD.Raw/test.tar.gz"
+
+if ! tar -xvzf MELD.Raw/train.tar.gz; then
+  echo "$0: error un-tarring archive $data/MELD.Raw/train.tar.gz"
+  exit 1;
+fi
+
+mv train_splits MELD.Raw/train
+echo "$0: Successfully downloaded and un-tarred $data/MELD.Raw/train.tar.gz"
+
+mkdir data
+mv MELD.Raw/*.csv data/
+mv *.csv data/
+mv MELD.Raw/README.txt ./
+
 if $remove_archive; then
   echo "$0: removing $data/MELD.Raw.tar.gz file since --remove-archive option was supplied."
-  rm $data/MELD.Raw.tar.gz
+  rm MELD.Raw.tar.gz
+  rm MELD.Raw/*.tar.gz
 fi
+
+mv MELD.Raw wavs

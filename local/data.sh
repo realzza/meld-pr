@@ -13,9 +13,9 @@ SECONDS=0
 
 
 stage=1
-stop_stage=100
+stop_stage=1
 
-datadir=./downloads
+datadir=./downloads_test
 meld_root=${datadir}/MELD.Raw
 data_url=https://web.eecs.umich.edu/~mihalcea/downloads/
 data_url2=https://huggingface.co/datasets/declare-lab/MELD/resolve/main/
@@ -41,9 +41,9 @@ fi
 if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     log "stage 1: Data Download"
     mkdir -p ${datadir}
-    if ! local/download_and_untar.sh ${datadir} ${data_url}; then
+    if ! local/download_and_untar.sh --remove-archive ${datadir} ${data_url}; then
         log "Failed to download from the original site, try a backup site."
-        local/download_and_untar.sh ${datadir} ${data_url2}
+        local/download_and_untar.sh --remove-archive ${datadir} ${data_url2}
     fi
 fi
 
